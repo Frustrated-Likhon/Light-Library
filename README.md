@@ -35,7 +35,7 @@ LightLibrary/
 
 1. Clone this repository:  
 ```bash
-git clone https://github.com/yourusername/LightLibrary.git
+git clone https://github.com/Frustrated-Likhon/Light-Library
 cd LightLibrary
 ```
 
