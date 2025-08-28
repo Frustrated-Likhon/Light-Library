@@ -66,7 +66,6 @@ http://YOUR_PC_IP:5000
 ### Home Page
 ![Light Mode](screenshots/LightMode.png)
 
-### Video Player
 ![Dark Mode](screenshots/DarkMode.png)
 
 
