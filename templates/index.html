@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Ebook Reader</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>Localhost eBook Library</h1>
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <div class="upload-section">
+                <input type="file" id="ebook-upload" accept=".epub,.pdf" hidden>
+                <button id="upload-btn" class="primary-btn">
+                    <i class="fas fa-upload"></i> Upload Book
+                </button>
+                <span id="file-name"></span>
+            </div>
+
+            <div class="view-toggle">
+                <button id="library-view-btn" class="view-btn active">
+                    <i class="fas fa-book-open"></i> Library
+                </button>
+                <button id="reader-view-btn" class="view-btn">
+                    <i class="fas fa-book-reader"></i> Reader
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Library View -->
+            <div id="library-view">
+                <h2>Your Library</h2>
+                <div id="books-grid">
+                    {% for book in library %}
+                    <div class="book-card" data-filename="{{ book.path }}" data-type="{{ book.type }}">
+                        <div class="book-cover">
+                            <i class="fas fa-book-open"></i>
+                            <span class="book-format">{{ book.type|upper }}</span>
+                        </div>
+                        <div class="book-info">
+                            <h3>{{ book.title }}</h3>
+                            <p class="book-filename">{{ book.filename }}</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="empty-library">
+                        <i class="fas fa-inbox"></i>
+                        <p>Your library is empty</p>
+                        <p>Upload books to get started</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Reader View -->
+            <div id="reader-view" class="hidden">
+                <div id="book-info">
+                    <h2 id="book-title"></h2>
+                    <div class="reader-controls">
+                        <div id="epub-controls" class="hidden">
+                            <button id="prev-btn" class="nav-btn">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <span id="page-info">Chapter 1 of 10</span>
+                            <button id="next-btn" class="nav-btn">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div id="pdf-controls" class="hidden">
+                            <button id="prev-page" class="nav-btn">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <span id="pdf-page-info">Page 1 of 1</span>
+                            <button id="next-page" class="nav-btn">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <div class="zoom-controls">
+                                <button id="zoom-out" class="zoom-btn">
+                                    <i class="fas fa-search-minus"></i>
+                                </button>
+                                <button id="zoom-in" class="zoom-btn">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button id="fit-width" class="zoom-btn">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reader">
+                    <div id="epub-reader" class="hidden">
+                        <div id="content"></div>
+                    </div>
+                    <div id="pdf-reader" class="hidden">
+                        <canvas id="pdf-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div id="welcome-message">
+                    <i class="fas fa-book-reader"></i>
+                    <p>Select a book from your library to start reading</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
