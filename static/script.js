@@ -1,6 +1,5 @@
-// static/script.js
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
+   
     const themeToggle = document.getElementById('theme-toggle');
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('ebook-upload');
@@ -30,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const welcomeMessage = document.getElementById('welcome-message');
     const booksGrid = document.getElementById('books-grid');
     
-    // State variables
+    
     let currentBook = null;
     let currentChapter = 0;
     let darkMode = localStorage.getItem('darkMode') === 'true';
     
-    // PDF.js variables
+   
     let pdfDoc = null;
     let pageNum = 1;
     let pageRendering = false;
@@ -43,17 +42,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let scale = 1.2;
     let canvasContext = pdfCanvas.getContext('2d');
     
-    // Initialize theme
+   
     if (darkMode) {
         document.body.classList.add('dark-mode');
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
     
-    // Initialize PDF.js
+   
     pdfjsLib = window['pdfjs-dist/build/pdf'];
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
     
-    // Event Listeners
+
     themeToggle.addEventListener('click', toggleDarkMode);
     uploadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handleFileUpload);
@@ -67,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
     zoomOutBtn.addEventListener('click', zoomOut);
     fitWidthBtn.addEventListener('click', fitToWidth);
     
-    // Add event listeners to book cards
     document.addEventListener('click', function(e) {
         const bookCard = e.target.closest('.book-card');
         if (bookCard) {
@@ -78,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Functions
+
     function toggleDarkMode() {
         darkMode = !darkMode;
         document.body.classList.toggle('dark-mode');
@@ -131,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             currentBook = data;
             
-            // Update UI based on book type
             bookTitle.textContent = data.title;
             bookInfo.classList.remove('hidden');
             reader.classList.remove('hidden');
@@ -146,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadPdf(`/file/uploads/${data.filename}`);
             }
             
-            // Refresh library to show the new book
             refreshLibrary();
         })
         .catch(error => {
@@ -164,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Create a book object
                 const pathParts = filepath.split('/');
                 const filename = pathParts[pathParts.length - 1];
                 const title = filename.split('.')[0];
@@ -176,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     path: filepath
                 };
                 
-                // Update UI
                 bookTitle.textContent = title;
                 bookInfo.classList.remove('hidden');
                 reader.classList.remove('hidden');
@@ -185,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (type === 'epub') {
                     currentChapter = 0;
                     showEpubReader();
-                    // For EPUBs, we need to load the actual content
+                    
                     loadEpubContent(filepath);
                 } else {
                     showPdfReader();
@@ -238,10 +232,10 @@ document.addEventListener('DOMContentLoaded', function() {
         content.innerHTML = `<h3>${chapter.title || `Chapter ${currentChapter + 1}`}</h3>
                             <p>${chapter.content}</p>`;
         
-        // Update page info
+
         pageInfo.textContent = `Chapter ${currentChapter + 1} of ${currentBook.chapters.length}`;
         
-        // Update button states
+
         prevBtn.disabled = currentChapter === 0;
         nextBtn.disabled = currentChapter === currentBook.chapters.length - 1;
     }
@@ -260,13 +254,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // PDF.js functions
+
     function loadPdf(url) {
         pdfjsLib.getDocument(url).promise.then(function(pdf) {
             pdfDoc = pdf;
             pdfPageInfo.textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
             
-            // Render the first page
+
             renderPage(pageNum);
         }).catch(function(error) {
             alert('Error loading PDF: ' + error.message);
@@ -336,8 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function fitToWidth() {
-        // This would need the container width to calculate proper scale
-        // For now, just reset to default scale
+     
         scale = 1.2;
         queueRenderPage(pageNum);
     }
@@ -377,4 +370,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial library refresh
     refreshLibrary();
+
 });
