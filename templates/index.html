@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local Ebook Reader</title>
+    <title>Light Library</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
@@ -12,7 +12,7 @@
     <div class="container">
         <header>
             <div class="header-top">
-                <h1>Localhost eBook Library</h1>
+                <h1>eBook Library</h1>
                 <button id="theme-toggle" class="theme-btn">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -37,7 +37,7 @@
         </header>
 
         <main>
-            <!-- Library View -->
+
             <div id="library-view">
                 <h2>Your Library</h2>
                 <div id="books-grid">
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <!-- Reader View -->
+    
             <div id="reader-view" class="hidden">
                 <div id="book-info">
                     <h2 id="book-title"></h2>
